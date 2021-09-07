@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="cs_finalAssignment_reset.css" rel="stylesheet" />
+    <link href="PROG_Final_css_styles.css" rel="stylesheet" />
+    <link href="scroller_bg.css" rel="stylesheet" />
+
+    <link rel="shortcut icon" href="#"> 
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;800&display=swap" rel="stylesheet"> 
+
+
+    <title>Countries of the World!</title>
+</head>  
+
+<body>
+<!-- ======================================================================================================================================= -->
+
+        <!-- <iframe width="0" height="0" src="https://www.youtube.com/embed/8jNHemLQBJQ?autoplay=1&mute=0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>  -->
+
+    <div class="wrapper"> 
+
+        <div class="header">
+            <h1>Countries of the World!!!</h1> 
+        </div>
+        <div class="menu">
+            <div class="country_dropdown">
+                <select id="countryList"></select> 
+            </div>
+        </div>
+        <!-- <div>
+        </div> -->
+        <div class="map_area">
+            <div>
+                <img id="flagImg">
+                <img id="#flagImg_highlight">
+            </div>
+        </div>
+        <div class="options">
+            <div class="nested">
+                <div>
+                    <p>Population:</p><input id="population" type="text" readonly>
+                </div>
+                <div>
+                    <p>Area:</p><input id="area" type="text" readonly>
+                    <select id="convertArea">
+                        <option selected>to Miles</option>
+                        <option>to KM</option>
+                    </select><br>
+                </div>
+                <div>
+                    <div>                      
+                    </div>
+                    <div>
+                        <p>Percentage of World Population:</p>
+                    </div>
+                    <input id="worldPercentage" type="text" readonly>
+                </div>
+                <div>
+                    <!-- Radio Buttons for population density --> 
+                    <div>
+                        <p>Population Density</p>
+                    </div>
+                    <br>
+                    <label for="cMi">Per Square Mile</label>
+                    <input type="radio" name="convertPopDensity" id="cMi" value="sq_miles" onclick="getPopulationDensityMiles()"><br>
+                    <label for="cKm">Per Square KM</label>
+                    <input type="radio" name="convertPopDensity" id="cKm" value="sq_kms" onclick="getPopulationDensityKilometers()"><br>          
+                    <input id="popdensity" type="text" readonly >
+                </div>
+                <div>
+                    <!-- Wiki URL link to be changed with function !!!! -->
+                    <button class="theButton" onclick="launchingWiki()">Wiki</button>
+                </div>      
+            </div>
+        </div>  
+    </div>
+
+<!-- ======================================================================================================================================= -->
+        
+        
+
+<script>
+
+//Carrier varibles for the current population and area of the selected country  (GLOBALS)
+    var currentPop;
+    var currentArea;
+    var countryName;
+// <!--The innitialization code-->
+    var selectTag = document.querySelector("#countryList");
+    selectTag.addEventListener('change',updateFlag);
+    
+    var convertAreaTag = document.querySelector("#convertArea");    // Convert Area tag
+    convertAreaTag.addEventListener('change',convertLandArea);
+
+    var radioTags = document.querySelectorAll("input[name=convertPopDensity]");
+    for (tag of radioTags)
+    {
+        tag.addEventListener('click',convertPD);
+    }
+
+// This function converts the population density per sq mile to sq kilometer
+    function convertPD(event)
+    {
+        event.target.value;
+    }
+
+    var countryData = [];   
+    loadCountryData();   // async call .... callback ... doesn't block
+
+// This function Converts the land Area from sq Miles to sq Kilometers
+    function convertLandArea(event)
+    {
+        var convertDirection = event.target.value;
+        if(convertDirection == "to KM")
+        {
+             var currentAreaTag = document.querySelector("#area");
+             var newArea = (currentAreaTag.value) * 2.58998811; 
+        } 
+        else 
+        {
+            var currentAreaTag = document.querySelector("#area");
+            var newArea = (currentAreaTag.value) / 2.58998811;
+            currentAreaTag.value + " to Miles";
+        }
+        var landAreaTag = document.querySelector("#area");
+        landAreaTag.value = Math.round(newArea);
+    }
+
+    
+//   Update Flag function  !!!
+    function updateFlag()
+    {
+        document.getElementById("convertArea")[0].selected = true;      //This sets a default value of miles when selecting a new country  from the dropdown menu//
+        var imgFlag = document.querySelector("#flagImg");
+        var filename = event.target.value;
+
+        countryName = filename;
+
+        var newfilename = filename.replace(/ /gi, "_");
+
+        var flagFile = "flags/" + newfilename + ".png";
+        console.dir(event.target);
+        imgFlag.setAttribute("src", flagFile);
+
+// Population Textbox: get a programmatic hold on the population to display in field
+        var textPopulation = document.querySelector("#population");       // Pulling data currently displayed from the textbox  !!!!
+        textPopulation.value = countryData[event.target.selectedIndex].Population;
+        currentPop = countryData[event.target.selectedIndex].Population;
+
+// Area Textbox :   Get a programmatic hold on the country area
+        var landArea = document.querySelector("#area");
+        landArea.value = countryData[event.target.selectedIndex].Area;
+        currentArea = countryData[event.target.selectedIndex].Area;
+        getPercentage();
+        document.querySelector("#cMi").checked = true;
+        getPopulationDensityMiles();
+    }
+ 
+
+//  once the code is cleaned up =====>  replace var pageUrl with "updatedWiki"
+        function launchingWiki()
+    {
+        var filename = countryName;
+        var newfilename = filename.replace(/ /gi, "_");
+        var updateWiki = "https://en.wikipedia.org/wiki/" + newfilename;
+        window.open(updateWiki);
+    }
+
+
+// This calculates the population density in Miles
+    function getPopulationDensityMiles()
+    {
+        var popDensityMi = document.querySelector("#popdensity");
+        popDensityMi.value = (currentPop / currentArea).toFixed(2);
+    }
+
+// This calculates the population density in Miles
+    function getPopulationDensityKilometers()
+    {
+        console.log(currentPop / Math.round((currentArea * 2.58998811)));
+        var popDensityKM = document.querySelector("#popdensity");
+        popDensityKM.value = (currentPop / Math.round((currentArea * 2.58998811))).toFixed(2);
+    }
+
+
+// This function gets the world population
+    function getWorldPop()
+    {
+        var total = 0; 
+        for(var i = 0; i < countryData.length; i++)
+        {
+            total += countryData[i].Population;
+        }
+                //var total = countryData.reduce((a,b) => {a.Population + b.Population});
+                return total;
+    }
+
+
+// This function gets the percentage of the world population of the selected country            
+    function  getPercentage()
+    {
+        var percentage = document.querySelector("#worldPercentage");
+        percentage.value = ((currentPop / getWorldPop() * 100).toFixed(3) + " %");              
+    }
+
+
+// Load Country Data Function
+    function loadCountryData()
+    {
+        fetch("http://127.0.0.1:5500/countries.json")  // This is the address of the liveserver
+        .then(response => response.json())
+        .then(data => displayCoutnryData(data));    //  This is a "callback"
+    }
+
+
+// Display Country Function
+    function displayCoutnryData(jsonDataArray) 
+    {
+        countryData = jsonDataArray;
+        for(country of jsonDataArray)     // Use a different for loop to display the data
+        {
+            var selectTag = document.querySelector("#countryList");
+// programmatically build an HTML element  - <option> element
+            var optionTag = document.createElement("option");
+// insert current country name inbetween the <option> tags
+            optionTag.innerText = country.Name;    //   <select>  <option>Andorra</option>  </select>
+            selectTag.appendChild(optionTag);
+        }
+//This is how we set defaults when selecting a new item in the country list     ************   I need to learn more about this right here!!!
+        selectTag.selectedIndex = 0;
+        selectTag.dispatchEvent(new Event('change'));
+    }
+
+</script>
+</body>
+</html>

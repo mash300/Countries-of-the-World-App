@@ -1,0 +1,36 @@
+.bg-container /* used for presentation */ {
+  width:150vh;
+  height:150vh;
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform: translate3d(-50%,-50%,0);
+  overflow:hidden;
+  z-index: -1;
+}
+
+.bg-scroll {
+	opacity: 1;
+  position: absolute;
+  /* make BG larger than container */
+  height: 150%;
+  width: 150%;
+  /* center bg in container - ratio of 150% */
+  top: -25%;
+  left: -25%;    
+  background: url(/background_repeater.png) repeat;
+  animation: backgroundScroll 5s linear infinite;
+  transform: rotate(45deg) scale(1);
+  transform-origin: center center;
+  z-index: -1;
+}
+
+@keyframes backgroundScroll {
+	0% {
+    background-position: 0 0;
+  }
+	100% {
+    /* pattern bg texture is 1000x1000px */
+    background-position:0 -150px;
+  }
+}

@@ -1,0 +1,185 @@
+
+body, html {
+    background-color: rgb(0, 0, 0);
+    height: 100%;
+    margin: 0;
+    background: linear-gradient(to bottom, rgbaz(3,75,82,1) 0%, rgba(3,75,82,0)100%);
+    background: url(/background_image_tile.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+}
+
+.wrapper {
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
+    grid-auto-rows: minmax(100px, auto);
+    grid-gap: 1em;
+    justify-items: stretch;
+    align-items: stretch;
+}
+
+.wrapper > div {
+/* background: #eee; */
+    padding: 1em;
+}
+
+.header {
+    width: 70%;
+    margin: auto;
+    background-color: rgb(18, 26, 65);
+    border-radius: 15px;
+    text-align: center;
+    grid-column: 1/4;
+    grid-row: 1/2;
+}
+
+.header h1 {
+    font-size: 72px;
+    background: -webkit-linear-gradient(#13bde7, rgb(143, 23, 69));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+
+
+/* h1 {
+    font-size: 72px;
+    background: -webkit-linear-gradient(#eee, #333);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  } */
+
+.menu {
+    background-color: rgba(18, 26, 65);
+    border-radius: 0px 15px 15px 0px;
+    grid-column: 1/2;
+    grid-row: 2/4;
+}
+
+.map_area {
+    position: relative;
+    min-width: 1000px;
+    min-height:600px;
+    /* background-color: darkgreen; */
+    grid-column: 2/4;
+    grid-row: 2/4;
+}
+
+.map_area div {
+    padding-top: 70px;
+}
+
+div #flagImg {
+    position: relative;
+    display: block;
+    margin: auto;
+    min-width: 600px;
+    min-height:200px;
+    width: 800px;
+    height: 400px;
+    box-shadow:  -10px 15px 15px #0f0f0f8c; 
+    border-radius: 25px;
+    border: 5px solid white;
+    z-index: 0;
+}
+
+
+div .options {
+    display: grid;
+    background-color:rgb(18, 26, 65);
+    grid-template-columns: repeat(1, 4fr);
+    grid-auto-rows: minmax(100px, auto);
+    text-align: center;
+    justify-content: space-around;
+    grid-column: 1/4;
+    grid-gap: 1em;
+    justify-items: stretch;  
+    align-items: stretch;
+}
+
+.nested > div {
+    background-color: rgba(18, 26, 65);
+    border: 5px solid rgb(31, 45, 112);
+    border-radius: 15px;
+    display: inline-block;
+    vertical-align: top;
+    margin: 20px;
+    padding: 10px;
+}
+
+.country_dropdown select {
+    display: block;
+    width: 100%;
+    height: 100%;
+    min-height: 70px;
+    border-radius: 15px;
+    font-size: 20px;
+    font-weight: bold;
+    font-family: 'Orbitron', sans-serif;
+    border: 5px solid rgb(31, 45, 112);
+    color: rgb(19, 189, 231);
+    background-color: rgb(18, 26, 65);
+}
+
+#countryList {
+    padding-left: 20px;
+}
+
+.infoFields_a input {
+
+    color: rgb(19, 189, 231);
+    font-size: 20px;
+    display: inline-flex;
+    padding: 2px;
+}
+
+.nested p {
+    margin: 2px; 
+    color: rgb(19, 189, 231);
+    font-size: 20px; 
+}
+
+.nested label {
+    margin: 4px; 
+    color: rgb(19, 189, 231);
+    font-size: 15px; 
+}
+
+.nested select {
+    display: block;
+    width: 100%;
+    height: 100%;
+    min-height: 50px;
+    border-radius: 15px;
+    font-size: 20px;
+    font-weight: bold;
+    font-family: 'Orbitron', sans-serif;
+    border: 5px solid rgb(31, 45, 112);
+    color: rgb(19, 189, 231);
+    background-color: rgb(18, 26, 65);
+}
+
+input[type=text] {
+    width: 100%;
+    font-size: 15px;
+    padding: 10px;
+    margin: 8px 0;
+    box-sizing: border-box;
+    border-radius: 15px;
+    border: none;
+    background-color: rgb(19, 189, 231);
+    color: white;
+  }
+
+.theButton {
+    background-color: #dd2c58;
+    border: none;
+    border-radius: 15px;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+}
